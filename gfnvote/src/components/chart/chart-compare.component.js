@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import axios from "axios";
-import { NavLink } from "react-router-dom";
-import ChartAdmin from "./chart-admin.component";
-const ChartPreGate = (props) => {
+import React, { useState, useEffect } from "react"
+import { Button } from "react-bootstrap"
+import axios from "axios"
+import { NavLink } from "react-router-dom"
+
+const ChartCompare = (props) => {
   const [trainer1, setTrainer1] = useState("")
   const [trainer2, setTrainer2] = useState("")
   const [users, setUsers] = useState(props.location.state.users)
-  const [forms, setForms] = useState(props.location.state.forms)
+  const [votes, setVotes] = useState(props.location.state.votes)
   const [trainerList, setTrainerList] = useState([])
 
 
   useEffect( () => {
     const result =  axios(
       'http://localhost:5000/users',
-    );
-    setUsers(result.data);
-  },[]);
+    )
+    setUsers(result.data)
+  },[])
   useEffect(()=>{
     users.map(f => {
       if (f.role === "trainer") {
-        trainerList.push(f.email);
+        trainerList.push(f.email)
       }
     })
   },[])
@@ -57,9 +57,9 @@ const ChartPreGate = (props) => {
                     onChange={(e) => setTrainer1(e.target.value)}
                     id="inputGroupSelect01"
                   >
-                    <option placeholder>wählen...</option>
+                      <option  placeholder ></option>
                     {trainerList.map((list) => (
-                      <option key={list._id} value={list.email}>
+                      <option  id={list._id} value={list.email}>
                         {list}
                       </option>
                     ))}
@@ -86,7 +86,7 @@ const ChartPreGate = (props) => {
                     onChange={(e) => setTrainer2(e.target.value)}
                     id="inputGroupSelect01"
                   >
-                    <option placeholder>wählen...</option>
+                      <option  placeholder ></option>
                     {trainerList.map((list) => (
                       <option key={list._id} value={list.email}>
                         {list}
@@ -109,7 +109,7 @@ const ChartPreGate = (props) => {
                       state: {
                         trainer1: trainer1,
                         trainer2: trainer2,
-                        forms: forms,
+                        votes: votes,
                       },
                     }}
                   >
@@ -125,7 +125,7 @@ const ChartPreGate = (props) => {
         
         </div>
       </>
-    );
+    )
 
 }
-export default ChartPreGate;
+export default ChartCompare

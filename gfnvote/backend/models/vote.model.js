@@ -2,11 +2,20 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const formSchema = new Schema({
+const voteSchema = new Schema({
+    course: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     courseId: {
         type: String,
         required: true,
         trim: true,
+    },
+    courseDate: {
+        type: Date,
+        required: true
     },
     trainer: {
         type: String,
@@ -89,6 +98,6 @@ const formSchema = new Schema({
         timestamps: true,
     }
 );
-const Form = mongoose.model('Form', formSchema);
+const Vote = mongoose.model('Vote', voteSchema);
 
-module.exports = Form;
+module.exports = Vote;

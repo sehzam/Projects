@@ -23,14 +23,12 @@ connection.once('open', () => {
 
 const usersRouter = require('./routes/users');
 const coursesRouter = require('./routes/courses');
-const formsRouter = require('./routes/forms');
-const logsRouter = require('./routes/log');
+const votesRouter = require('./routes/votes');
 
 
 app.use('/users', usersRouter);
 app.use('/courses', coursesRouter);
-app.use('/forms', formsRouter);
-app.use('/logs', logsRouter);
+app.use('/votes', votesRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`)

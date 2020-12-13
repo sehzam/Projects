@@ -1,15 +1,17 @@
 const router = require('express').Router();
 
-let Form = require('../models/form.model');
+let Vote = require('../models/vote.model');
 
 router.route('/').get((req, res) => {
-    Form.find()
+    Vote.find()
         .then( forms => res.json(forms))
         .catch(err => res.status(400).json('Error: ' + err))
 });
 
 router.route('/add').post((req, res) => {
+    const course = req.body.course;
     const courseId = req.body.courseId;
+    const courseDate = req.body.courseDate;
     const trainer = req.body.trainer;
     const email = req.body.email;
     const good = req.body.good;
@@ -26,31 +28,33 @@ router.route('/add').post((req, res) => {
     const q10 = req.body.q10;
     const q11 = req.body.q11;
 
-    const newForm = new Form({courseId, trainer, email, good, bad, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11});
+    const newVote = new Vote({course, courseId, courseDate, trainer, email, good, bad, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11});
 
-    newForm.save()
-        .then(() => res.json('Form added!'))
+    newVote.save()
+        .then(() => res.json('Vote added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 router.route('/:id').get((req, res) => {
-    Form.findById(req.params.id)
+    Vote.findById(req.params.id)
         .then(form => res.json(form))
         .catch(err => res.status(400).json(('Error: ' + err)));
 });
 router.route('/:id').delete((req, res) => {
-    Form.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Form deleted.'))
+    Vote.findByIdAndDelete(req.params.id)
+        .then(() => res.json('Vote deleted.'))
         .catch(err => res.status(400).json(('Error: ' + err)));
 });
 router.route('/').delete((req, res) => {
-    Form.findOneAndDelete(req.params.id)
-        .then(() => res.json('Form deleted.'))
+    Vote.findOneAndDelete(req.params.id)
+        .then(() => res.json('Vote deleted.'))
         .catch(err => res.status(400).json(('Error: ' + err)));
 });
 router.route('/update/:id').post((req, res) => {
-    Form.findById(req.params.id)
+    Vote.findById(req.params.id)
         .then(form =>  {
+            form.course = req.body.course;
             form.courseId = req.body.courseId;
+            form.courseDate = req.body.courseDate;
             form.trainer = req.body.trainer;
             form.email = req.body.email;
             form.good = req.body.good;
@@ -68,7 +72,7 @@ router.route('/update/:id').post((req, res) => {
             form.q11 = req.body.q11;
 
             form.save()
-                .then(() => res.json('Form updated!'))
+                .then(() => res.json('Vote updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json(('Error: ' + err)));

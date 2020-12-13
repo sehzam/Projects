@@ -1,45 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 
-const ChartBar = (props) => {
-  return (
-    <div className="bg-dark row">
-      <div className="container w-100 ">
-        <div className="m-5 text-center bg-white border rounded">
-          <div className="m-5 text-center bg-white border rounded">
-            <Bar
-              data={props.chartData}
-              options={{
-                title: {
-                  display: true,
-                  text: `Kurs ${props.course} von ${props.begin.substring(
-                    0,
-                    10
-                  )} bis ${props.end.substring(0, 10)}`,
-                  fontSize: 25,
-                },
-                legend: {
-                  display: true,
-                  position: "top",
-                },
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const Chart = (props) => {
-  const [id, setId] = useState(props.location.state.id);
-  const [email, setEmail] = useState(props.location.state.email);
-  const [course, setCourse] = useState(props.location.state.course);
-  const [begin, setBegin] = useState(props.location.state.begin);
-  const [end, setEnd] = useState(props.location.state.end);
-  const [forms, setForms] = useState(props.location.state.forms);
 
-  const [filteredForms, setFilteredForms] = useState([]);
+  const [id, setId] = useState(props.location.state.id);
+  const [email, setEmail] = useState(props.location.state.course.trainer);
+  const [course, setCourse] = useState(props.location.state.course.course);
+  const [begin, setBegin] = useState(props.location.state.course.begin);
+  const [end, setEnd] = useState(props.location.state.course.end);
+  const [votes, setVotes] = useState(props.location.state.votes);
+
+  const [filteredVotes, setFilteredVotes] = useState([]);
   const [chartData, setChartData] = useState({});
 
   const [question1, setQuestion1] = useState(0);
@@ -55,8 +27,40 @@ const Chart = (props) => {
   const [question11, setQuestion11] = useState(0);
   const [count1, setCount1] = useState(0);
   const [count2, setCount2] = useState(0);
-  
-  useEffect(() => {
+
+  const ChartBar = (props) => {
+    return (
+        <div className="bg-dark row">
+          <div className="container w-100 ">
+            <div className="m-5 text-center bg-white border rounded">
+              <div className="m-5 text-center bg-white border rounded">
+                <Bar
+                    data={props.chartData}
+                    options={{
+                      title: {
+                        display: true,
+                        text: `Kurs ${props.course} von ${props.begin.substring(
+                            0,
+                            10
+                        )} bis ${props.end.substring(0, 10)}`,
+                        fontSize: 25,
+                      },
+                      legend: {
+                        display: true,
+                        position: "top",
+                      },
+                    }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+    );
+  };
+
+
+
+  useEffect( () => {
     let q1 = 0;
     let q2 = 0;
     let q3 = 0;
@@ -69,8 +73,8 @@ const Chart = (props) => {
     let q10 = 0;
     let q11 = 0;
 
-    forms.map((f) => {
-      console.log("gefunden");
+    votes.map((f) => {
+
       if (f.courseId === id) {
         setCount1(count1 +1)
         q1 = +q1 + +f.q1;
@@ -84,7 +88,7 @@ const Chart = (props) => {
         q9 = +q9 + +f.q9;
         q10 = +q10 + +f.q10;
         q11 = +q11 + +f.q11;
-        filteredForms.push(f)
+        filteredVotes.push(f)
       }
     });
     setQuestion1(q1)
@@ -102,6 +106,8 @@ const Chart = (props) => {
 
 
 useEffect(()=>{
+  console.log(props.location.state.course.trainer)
+
   if(count1 > count2){
 
     setCount2(count2 + 1)
@@ -123,9 +129,9 @@ useEffect(()=>{
       datasets: [
         {
           label: [
-            `(${filteredForms.length})  ${
-              filteredForms.length === 1 ? "Bewertung" : "Bewertungen"
-            } für Trainer  :  ${props.location.state.trainer}`,
+            `(${filteredVotes.length})  ${
+              filteredVotes.length === 1 ? "Bewertung" : "Bewertungen"
+            } für Trainer  :  ${props.location.state.course.trainer}`,
           ],
           data: [
             question11,
@@ -162,7 +168,7 @@ useEffect(()=>{
 })
 
   return (
-    <ChartBar course={course} begin={begin} end={end} chartData={chartData} />
+    <ChartBar course={course} name={course.course} trainer={email} begin={begin} end={end} chartData={chartData} />
   );
 };
 export default Chart;

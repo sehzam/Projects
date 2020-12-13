@@ -1,276 +1,262 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
-import { Multiselect } from "multiselect-react-dropdown";
+import DatePicker from "react-datepicker";
+import {Button} from "react-bootstrap";
 
-import { BsPersonFill } from "react-icons/bs";
-import { IoIosPeople, IoIosRocket, IoIosFlag } from "react-icons/io";
-import { GiOpenBook } from "react-icons/gi";
+import {Multiselect} from "multiselect-react-dropdown";
 
-export default class CreateCourse extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      trainerList: [],
-      studentList: [],
-      users: [],
-      students: [],
-      course: "",
-      trainer: "",
-      begin: new Date(),
-      end: new Date(),
-      selectedStudents: [],
-    };
-  }
-  componentDidMount() {
-    axios
-      .get("http://localhost:5000/users")
-      .then((response) => {
+import {BsPersonFill} from "react-icons/bs";
+import {IoIosPeople, IoIosRocket, IoIosFlag} from "react-icons/io";
+import {GiOpenBook} from "react-icons/gi";
 
-        let trainerList = [];
-        let studentList = [];
+const CreateCourse = () => {
 
-        for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].role === "trainer") {
-            let result = response.data[i].email;
-            trainerList.push(result);
-          }
-          if (response.data[i].role === "student") {
-            studentList.push(response.data[i]);
-          }
-        }
-        this.setState({
-          trainerList: trainerList,
-          studentList: studentList,
+    const [trainerList, setTrainerList] = useState([]);
+    const [studentList, setStudentList] = useState([]);
+    const [selectedStudents, setSelectedStudents] = useState([]);
+    const [students] = useState([]);
+    const [course, setCourse] = useState("");
+    const [trainer, setTrainer] = useState("");
+    const [begin, setBegin] = useState(new Date());
+    const [end, setEnd] = useState(new Date());
+
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/users")
+            .then((response) => {
+
+                let tList = [];
+                let sList = [];
+
+                for (let i = 0; i < response.data.length; i++) {
+                    if (response.data[i].role === "trainer") {
+                        let result = response.data[i].email;
+                        tList.push(result);
+                    }
+                    if (response.data[i].role === "student") {
+                        sList.push(response.data[i]);
+                    }
+                }
+                setTrainerList(tList)
+                setStudentList(sList)
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const onChangeCourse = (e) => {
+        setCourse(e.target.value)
+    }
+    const onChangeTrainer = (e) => {
+        setTrainer(e.target.value)
+    }
+    const onChangeBegin = (date) => {
+        setBegin(new Date(date))
+    }
+    const onChangeEnd = (date) => {
+        setEnd(new Date(date))
+    }
+    const onSelect = (selectedList, selectedItem) => {
+        let arr = students;
+        arr.push(selectedItem);
+
+        setSelectedStudents(arr)
+    }
+    const onRemove = (selectedList, selectedItem) => {
+        let arr = students;
+        let index = arr.indexOf(selectedItem);
+        delete arr[index];
+        let filtered = arr.filter(function (el) {
+            return el != null;
         });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
-  onChangeCourse(e) {
-    this.setState({
-      course: e.target.value,
-    });
-  
-  }
-  onChangeTrainer(e) {
-    this.setState({
-      trainer: e.target.value,
-    });
-  }
-  onChangeBegin(date) {
-    this.setState({
-      begin: date,
-    });
-  }
-  onChangeEnd(date) {
-    this.setState({
-      end: date,
-    });
-  }
-  onSelect(selectedList, selectedItem) {
-    this.state.students.push(selectedItem);
-  }
-  onRemove(selectedList, selectedItem) {
-    let arr = this.state.students;
-    let index = arr.indexOf(selectedItem);
-    delete arr[index];
-    let filtered = arr.filter(function (el) {
-      return el != null;
-    });
+        setSelectedStudents(filtered)
+    }
+    const onSubmit = () => {
 
-    this.setState({ students: filtered });
-  }
+        const c = {
+            course: course,
+            trainer: trainer,
+            begin: begin.toUTCString(),
+            end: end.toUTCString(),
+            students: selectedStudents,
+        };
+        axios
+            .post("http://localhost:5000/courses/add/", c)
+            .then((res) => console.log(res.data))
+            .then(console.log('Course Added'))
+            .catch(err => {
+                console.log(err);
+            });
 
-  onSubmit(e) {
-    e.preventDefault();
-    
-const course = {
-  course: this.state.course,
-  trainer: this.state.trainer,
-  begin: this.state.begin,
-  end: this.state.end,
-  students: this.state.students,
-};
-    
-    axios
-      .post("http://localhost:5000/courses/add", course)
-      .then((res) => console.log(res.data))
-      .catch((err) => {
-        console.log(err);
-      });
 
-    this.setState({
-      course: "",
-      trainer: "",
-      begin: new Date(),
-      end: new Date(),
-    });
-    // window.location = "/c_create";
-  }
+        window.location = "/";
+    }
 
-  render() {
     return (
-      
         <div className="bg-dark">
-          <br/>
-        <div className="container w-100 bg-white text-center border rounded">
-        <Button className="mt-5 mb-2"variant="info" disabled>
-        <h4>
-        <b>
-            Kurs erstellen
-            </b>
-        </h4>
-        </Button>
-            <div className="row justify-content-md-center">
-              <div className="col-12 my-3">
-                <div className="input-group mt-3">
-                  <div className="input-group-append">
+            <br/>
+            <div className="container w-100 bg-white text-center border rounded">
+                <Button className="mt-5 mb-2" variant="info" disabled>
+                    <h4>
+                        <b>
+                            Kurs erstellen
+                        </b>
+                    </h4>
+                </Button>
+                <div className="row justify-content-md-center">
+                    <div className="col-12 my-3">
+                        <div className="input-group mt-3">
+                            <div className="input-group-append">
 
-                    <label
-                      className="input-group-text"
-                      htmlFor="inputGroupSelect02"
-                    >
-                      <IoIosPeople/>
-                    </label>
+                                <label
+                                    className="input-group-text"
+                                    htmlFor="inputGroupSelect02"
+                                >
+                                    <IoIosPeople/>
+                                </label>
 
-                    <Multiselect
-                    
-                      options={this.state.studentList} // Options to display in the dropdown
-                      onSelect={this.onSelect.bind(this)} // Function will trigger on select event
-                      onRemove={this.onRemove.bind(this)} // Function will trigger on remove event
-                      displayValue="email" // Property name to display in the dropdown options
-                    />
+                                <Multiselect
+                                    selectedValues={students}
+                                    options={studentList} // Options to display in the dropdown
+                                    onSelect={onSelect} // Function will trigger on select event
+                                    onRemove={onRemove} // Function will trigger on remove event
+                                    displayValue="email" // Property name to display in the dropdown options
+                                />
 
-                  </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-12 col-sm-12 col-md-6">
+                        <div className="input-group  my-3">
+                            <div className="input-group-prepend">
+                                <label
+                                    className="input-group-text "
+                                    htmlFor="inputGroupSelect00"
+                                >
+                                    <GiOpenBook/>
+                                </label>
+                            </div>
+                            <select
+                                required
+                                autoFocus
+                                className="custom-select"
+                                value={course}
+                                onChange={onChangeCourse}
+                                id="inputGroupSelect00"
+                            >
+                                <option placeholder>wählen...</option>
+                                <option value="BWL">BWL</option>
+                                <option value="WISO">WISO</option>
+                                <option value="GA 1">GA 1</option>
+                                <option value="GA 2">GA 2</option>
+                                <option value="Programmierung">Programmierung</option>
+                                <option value="Netzwerk">Netzwerk</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="col-12 col-sm-12 col-md-6">
+                        <div className="input-group  my-3">
+                            <div className="input-group-prepend">
+                                <label
+                                    className="input-group-text "
+                                    htmlFor="inputGroupSelect00"
+                                >
+                                    <GiOpenBook/>
+                                </label>
+                            </div>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={course}
+                                onChange={onChangeCourse}
+                            />
+                        </div>
+                    </div>
+                    <hr/>
+
+                    <div className="col-12 col-sm-12 col-md-4">
+                        <div className="input-group my-3">
+                            <div className="input-group-prepend">
+                                <label
+                                    className="input-group-text"
+                                    htmlFor="inputGroupSelect01"
+                                >
+                                    <BsPersonFill/>
+                                </label>
+                            </div>
+                            <select
+                                required
+                                className="custom-select"
+                                value={trainer}
+                                onChange={onChangeTrainer}
+                                id="inputGroupSelect01"
+                            >
+                                <option placeholder>wählen...</option>
+                                {trainerList.map((list) => (
+                                    <option key={list._id} value={list.email}>
+                                        {list}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="col-sm-12 col-12 col-md-4 col-lg-4">
+                        <div className="input-group m-2">
+                            <div className="input-group-append">
+                                <label
+                                    className="input-group-text"
+                                    htmlFor="inputGroupSelect03"
+                                >
+                                    <IoIosRocket/>
+                                </label>
+                            </div>
+                            <DatePicker
+                                selected={begin}
+                                onChange={onChangeBegin}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-sm-12 col-12 col-md-4 col-lg-4">
+                        <div className="input-group m-2">
+                            <div className="input-group-append">
+                                <label
+                                    className="input-group-text"
+                                    htmlFor="inputGroupSelect03"
+                                >
+                                    <IoIosFlag/>
+                                </label>
+                            </div>
+                            <DatePicker
+                                selected={end}
+                                onChange={onChangeEnd}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-group col-12 m-4">
+                        <Button variant="outline-success" onClick={onSubmit}>
+                            <b>
+
+                                erstellen
+                            </b>
+                        </Button>
+                    </div>
+
                 </div>
-              </div>
-              
-              <div className="col-12 col-sm-12 col-md-6">
-                <div className="input-group  my-3">
-                  <div className="input-group-prepend">
-                    <label
-                      className="input-group-text "
-                      htmlFor="inputGroupSelect00"
-                    >
-                      <GiOpenBook/>
-                    </label>
-                  </div>
-                  <select
-                  required
-                  autoFocus
-                  className="custom-select"
-                  value={this.state.course}
-                  onChange={this.onChangeCourse.bind(this)}
-                  id="inputGroupSelect00"
-                  >
-                    <option placeholder>wählen...</option>
-                    <option value="BWL">BWL</option>
-                    <option value="GA 1">GA 1</option>
-                    <option value="GA 2">GA 2</option>
-                    <option value="Programmierung">Programmierung</option>
-                    <option value="Netzwerk">Netzwerk</option>
-                    <option value="WISO">WISO</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-12 col-sm-12 col-md-6">
-              <div className="input-group  my-3">
-                <div className="input-group-prepend">
-                  <label
-                    className="input-group-text "
-                    htmlFor="inputGroupSelect00"
-                    >
-                    <GiOpenBook/>
-                  </label>
-                </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.course}
-                  onChange={this.onChangeCourse.bind(this)}
-                />
-              </div>
+
             </div>
-            <hr/>
-
-              <div className="col-12 col-sm-12 col-md-4">
-                <div className="input-group my-3">
-                  <div className="input-group-prepend">
-                    <label
-                      className="input-group-text"
-                      htmlFor="inputGroupSelect01"
-                    >
-                      <BsPersonFill/> 
-                    </label>
-                  </div>
-                  <select
-                  required
-                    className="custom-select"
-                    value={this.state.trainer}
-                    onChange={this.onChangeTrainer.bind(this)}
-                    id="inputGroupSelect01"
-                  >
-                    <option placeholder>wählen...</option>
-                    {this.state.trainerList.map((list) => (
-                      <option key={list._id} value={list.email}>
-                        {list}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="col-sm-12 col-12 col-md-4 col-lg-4">
-                <div className="input-group m-2">
-                  <div className="input-group-append">
-                    <label
-                      className="input-group-text"
-                      htmlFor="inputGroupSelect03"
-                    >
-                      <IoIosRocket/>
-                    </label>
-                  </div>
-                  <DatePicker
-                    selected={this.state.begin}
-                    onChange={this.onChangeBegin.bind(this)}
-                    />
-                </div>
-              </div>
-              <div className="col-sm-12 col-12 col-md-4 col-lg-4">
-                <div className="input-group m-2">
-                  <div className="input-group-append">
-                    <label
-                      className="input-group-text"
-                      htmlFor="inputGroupSelect03"
-                      >
-                  <IoIosFlag/>
-                    </label>
-                  </div>
-                  <DatePicker
-                    selected={this.state.end}
-                    onChange={this.onChangeEnd.bind(this)}
-                  />
-                </div>
-              </div>
-
-              <div className="form-group col-12 m-4">
-              <Button variant="outline-success" onClick={this.onSubmit.bind(this)}>
-              <b>
-                  
-                erstellen
-                  </b>
-              </Button>
-            </div>
-              
-            </div>
-          
         </div>
-      </div>
-    );
-  }
+    )
+
 }
+
+export default CreateCourse;
+

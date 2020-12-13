@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Bar, Line } from "react-chartjs-2";
-import axios from "axios";
 
 const ChartAdmin = (props) => {
-  const [filteredForms1, setFilteredForms1] = useState([]);
+  const [filteredVotes1, setFilteredVotes1] = useState([]);
   const [chartData1, setChartData1] = useState({});
   const [chartData1_0, setChartData1_0] = useState({});
 
@@ -39,7 +38,7 @@ const ChartAdmin = (props) => {
   const [toggleTable1, setToggleTable1] = useState(false);
   const [toggleTable2, setToggleTable2] = useState(false);
 
-  const [filteredForms2, setFilteredForms2] = useState([]);
+  const [filteredVotes2, setFilteredVotes2] = useState([]);
   const [chartData2, setChartData2] = useState({});
   const [chartData2_0, setChartData2_0] = useState({});
 
@@ -69,21 +68,23 @@ const ChartAdmin = (props) => {
   const [question12_2_0, setQuestion12_2_0] = useState(0);
   const [trainer1, setTrainer1] = useState(props.location.state.trainer1);
   const [trainer2, setTrainer2] = useState(props.location.state.trainer2);
-  const [forms, setForms] = useState(props.location.state.forms);
-  const [courseId, setCourseId] = useState();
-  const [course, setCourse] = useState();
-  const [begin, setBegin] = useState();
-  const [end, setEnd] = useState();
+  const [votes, setVotes] = useState(props.location.state.votes);
 
   useEffect(() => {
-    forms.map((f) => {
-      if (trainer1 === f.trainer) {
-        filteredForms1.push(f);
-      }
-      if (trainer2 === f.trainer) {
-        filteredForms2.push(f);
-      }
-    });
+    if(votes != undefined){
+      votes.map((f) => {
+        console.log(f.trainer)
+        if (trainer1 === f.trainer) {
+          filteredVotes1.push(f);
+        }
+        if (trainer2 === f.trainer) {
+          filteredVotes2.push(f);
+        }
+      })
+    }
+    setFilteredVotes1(filteredVotes1.filter(function(item, pos){return filteredVotes1.indexOf(item) == pos}))
+    setFilteredVotes2(filteredVotes2.filter(function(item, pos){return filteredVotes2.indexOf(item) == pos}))
+
 
     let actuallyYear = new Date().toString().substring(11, 15);
 
@@ -137,567 +138,569 @@ const ChartAdmin = (props) => {
     let _2_11 = 0;
     let _2_12 = 0;
 
-    forms.map((ff) => {
-      if (ff.trainer === trainer1) {
-        setCount1(count1 + 1);
+    if( votes != undefined ){
+      votes.map((ff) => {
+        if (ff.trainer === trainer1) {
+          setCount1(count1 + 1);
 
-        q1_1 = +q1_1 + +ff.q1;
-        q2_1 = +q2_1 + +ff.q2;
-        q3_1 = +q3_1 + +ff.q3;
-        q4_1 = +q4_1 + +ff.q4;
-        q5_1 = +q5_1 + +ff.q5;
-        q6_1 = +q6_1 + +ff.q6;
-        q7_1 = +q7_1 + +ff.q7;
-        q8_1 = +q8_1 + +ff.q8;
-        q9_1 = +q9_1 + +ff.q9;
-        q10_1 = +q10_1 + +ff.q10;
-        q11_1 = +q11_1 + +ff.q11;
+          q1_1 = +q1_1 + +ff.q1;
+          q2_1 = +q2_1 + +ff.q2;
+          q3_1 = +q3_1 + +ff.q3;
+          q4_1 = +q4_1 + +ff.q4;
+          q5_1 = +q5_1 + +ff.q5;
+          q6_1 = +q6_1 + +ff.q6;
+          q7_1 = +q7_1 + +ff.q7;
+          q8_1 = +q8_1 + +ff.q8;
+          q9_1 = +q9_1 + +ff.q9;
+          q10_1 = +q10_1 + +ff.q10;
+          q11_1 = +q11_1 + +ff.q11;
 
-        filteredForms1.push(ff);
-      }
-      if (ff.trainer === trainer2) {
-        setCount1(count1 + 1);
+          filteredVotes1.push(ff);
+        }
+        if (ff.trainer === trainer2) {
+          setCount1(count1 + 1);
 
-        q1_2 = +q1_2 + +ff.q1;
-        q2_2 = +q2_2 + +ff.q2;
-        q3_2 = +q3_2 + +ff.q3;
-        q4_2 = +q4_2 + +ff.q4;
-        q5_2 = +q5_2 + +ff.q5;
-        q6_2 = +q6_2 + +ff.q6;
-        q7_2 = +q7_2 + +ff.q7;
-        q8_2 = +q8_2 + +ff.q8;
-        q9_2 = +q9_2 + +ff.q9;
-        q10_2 = +q10_2 + +ff.q10;
-        q11_2 = +q11_2 + +ff.q11;
+          q1_2 = +q1_2 + +ff.q1;
+          q2_2 = +q2_2 + +ff.q2;
+          q3_2 = +q3_2 + +ff.q3;
+          q4_2 = +q4_2 + +ff.q4;
+          q5_2 = +q5_2 + +ff.q5;
+          q6_2 = +q6_2 + +ff.q6;
+          q7_2 = +q7_2 + +ff.q7;
+          q8_2 = +q8_2 + +ff.q8;
+          q9_2 = +q9_2 + +ff.q9;
+          q10_2 = +q10_2 + +ff.q10;
+          q11_2 = +q11_2 + +ff.q11;
 
-        filteredForms2.push(ff);
-      }
+          filteredVotes2.push(ff);
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "01"
-      ) {
-        _1_01 =
-          +(
-            (+_1_01 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "01"
-      ) {
-        _2_01 =
-          +(
-            (+_2_01 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "01"
+        ) {
+          _1_01 =
+              +(
+                  (+_1_01 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "01"
+        ) {
+          _2_01 =
+              +(
+                  (+_2_01 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "02"
-      ) {
-        _1_02 =
-          +(
-            (+_1_02 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "02"
+        ) {
+          _1_02 =
+              +(
+                  (+_1_02 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "02"
-      ) {
-        _2_02 =
-          +(
-            (+_2_02 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "02"
+        ) {
+          _2_02 =
+              +(
+                  (+_2_02 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "03"
-      ) {
-        _1_03 =
-          +(
-            (+_1_03 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "03"
-      ) {
-        _2_03 =
-          +(
-            (+_2_03 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "03"
+        ) {
+          _1_03 =
+              +(
+                  (+_1_03 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "03"
+        ) {
+          _2_03 =
+              +(
+                  (+_2_03 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "04"
-      ) {
-        _1_04 =
-          +(
-            (+_1_04 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "04"
+        ) {
+          _1_04 =
+              +(
+                  (+_1_04 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "04"
-      ) {
-        _2_04 =
-          +(
-            (+_2_04 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "04"
+        ) {
+          _2_04 =
+              +(
+                  (+_2_04 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "05"
-      ) {
-        _1_05 =
-          +(
-            (+_1_05 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "05"
+        ) {
+          _1_05 =
+              +(
+                  (+_1_05 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "05"
-      ) {
-        _2_05 =
-          +(
-            (+_2_05 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "05"
+        ) {
+          _2_05 =
+              +(
+                  (+_2_05 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "06"
-      ) {
-        _1_06 =
-          +(
-            (+_1_06 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "06"
+        ) {
+          _1_06 =
+              +(
+                  (+_1_06 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "06"
-      ) {
-        _2_06 =
-          +(
-            (+_2_06 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "06"
+        ) {
+          _2_06 =
+              +(
+                  (+_2_06 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "07"
-      ) {
-        _1_07 =
-          +(
-            (+_1_07 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "07"
+        ) {
+          _1_07 =
+              +(
+                  (+_1_07 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "07"
-      ) {
-        _2_07 =
-          +(
-            (+_2_07 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "07"
+        ) {
+          _2_07 =
+              +(
+                  (+_2_07 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "08"
-      ) {
-        _1_08 =
-          +(
-            (+_1_08 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "08"
+        ) {
+          _1_08 =
+              +(
+                  (+_1_08 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "08"
-      ) {
-        _2_08 =
-          +(
-            (+_2_08 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "08"
+        ) {
+          _2_08 =
+              +(
+                  (+_2_08 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "09"
-      ) {
-        _1_09 =
-          +(
-            (+_1_09 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "09"
+        ) {
+          _1_09 =
+              +(
+                  (+_1_09 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "09"
-      ) {
-        _2_09 =
-          +(
-            (+_2_09 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "09"
+        ) {
+          _2_09 =
+              +(
+                  (+_2_09 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "10"
-      ) {
-        _1_10 =
-          +(
-            (+_1_10 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "10"
+        ) {
+          _1_10 =
+              +(
+                  (+_1_10 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "10"
-      ) {
-        _2_10 =
-          +(
-            (+_2_10 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "10"
+        ) {
+          _2_10 =
+              +(
+                  (+_2_10 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "11"
-      ) {
-        _1_11 =
-          +(
-            (+_1_11 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "11"
+        ) {
+          _1_11 =
+              +(
+                  (+_1_11 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "11"
-      ) {
-        _2_11 =
-          +(
-            (+_2_11 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "11"
+        ) {
+          _2_11 =
+              +(
+                  (+_2_11 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
 
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer1 &&
-        ff.createdAt.toString().substring(5, 7) === "12"
-      ) {
-        _1_12 =
-          +(
-            (+_1_12 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
-      if (
-        ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-        ff.trainer === trainer2 &&
-        ff.createdAt.toString().substring(5, 7) === "12"
-      ) {
-        _2_12 =
-          +(
-            (+_2_12 +
-              +ff.q1 +
-              +ff.q2 +
-              +ff.q3 +
-              +ff.q4 +
-              +ff.q5 +
-              +ff.q6 +
-              +ff.q7 +
-              +ff.q8 +
-              +ff.q9 +
-              +ff.q10) /
-            10
-          ) + +ff.q11;
-      }
-    });
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer1 &&
+            ff.courseDate.toString().substring(5, 7) === "12"
+        ) {
+          _1_12 =
+              +(
+                  (+_1_12 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
+        if (
+            ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+            ff.trainer === trainer2 &&
+            ff.courseDate.toString().substring(5, 7) === "12"
+        ) {
+          _2_12 =
+              +(
+                  (+_2_12 +
+                      +ff.q1 +
+                      +ff.q2 +
+                      +ff.q3 +
+                      +ff.q4 +
+                      +ff.q5 +
+                      +ff.q6 +
+                      +ff.q7 +
+                      +ff.q8 +
+                      +ff.q9 +
+                      +ff.q10) /
+                  10
+              ) + +ff.q11;
+        }
+      });
+    }
     setQuestion1_1(q1_1);
     setQuestion2_1(q2_1);
     setQuestion3_1(q3_1);
@@ -768,8 +771,8 @@ const ChartAdmin = (props) => {
         datasets: [
           {
             label: [
-              `(${filteredForms1.length})  ${
-                filteredForms1.length === 1 ? "Bewertung" : "Bewertungen"
+              `(${filteredVotes1.length})  ${
+                filteredVotes1.length === 1 ? "Bewertung" : "Bewertungen"
               } für Trainer  :  ${props.location.state.trainer1}`,
             ],
             data: [
@@ -864,8 +867,8 @@ const ChartAdmin = (props) => {
         datasets: [
           {
             label: [
-              `(${filteredForms2.length})  ${
-                filteredForms2.length === 1 ? "Bewertung" : "Bewertungen"
+              `(${filteredVotes2.length})  ${
+                filteredVotes2.length === 1 ? "Bewertung" : "Bewertungen"
               } für Trainer  :  ${props.location.state.trainer2}`,
             ],
             data: [

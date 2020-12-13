@@ -3,10 +3,10 @@ import { Button } from "react-bootstrap";
 import { Bar, Line } from "react-chartjs-2";
 
 const Chart = (props) => {
-  const [email, setEmail] = useState(props.location.state.email);
-  const [forms, setForms] = useState(props.location.state.forms);
+  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [votes, setVotes] = useState(props.location.state.votes);
 
-  const [filteredForms, setFilteredForms] = useState([]);
+  const [filteredVotes, setFilteredVotes] = useState([]);
   const [chartData, setChartData] = useState({});
   const [chartData_0, setChartData_0] = useState({});
 
@@ -67,280 +67,282 @@ const Chart = (props) => {
     let _1_11 = 0;
     let _1_12 = 0;
 
-    forms.map((ff) => {
-      if (ff.trainer === email) {
-        
-        setCount1(count1 + 1)
+    if(votes != undefined){
+        votes.map((ff) => {
+            if (ff.trainer === email) {
 
-        q1 = +q1 + +ff.q1;
-        q2 = +q2 + +ff.q2;
-        q3 = +q3 + +ff.q3;
-        q4 = +q4 + +ff.q4;
-        q5 = +q5 + +ff.q5;
-        q6 = +q6 + +ff.q6;
-        q7 = +q7 + +ff.q7;
-        q8 = +q8 + +ff.q8;
-        q9 = +q9 + +ff.q9;
-        q10 = +q10 + +ff.q10;
-        q11 = +q11 + +ff.q11;
+                setCount1(count1 + 1)
 
-        filteredForms.push(ff);
-      }
+                q1 = +q1 + +ff.q1;
+                q2 = +q2 + +ff.q2;
+                q3 = +q3 + +ff.q3;
+                q4 = +q4 + +ff.q4;
+                q5 = +q5 + +ff.q5;
+                q6 = +q6 + +ff.q6;
+                q7 = +q7 + +ff.q7;
+                q8 = +q8 + +ff.q8;
+                q9 = +q9 + +ff.q9;
+                q10 = +q10 + +ff.q10;
+                q11 = +q11 + +ff.q11;
 
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "01"
-     ) {
-       _1_01 =
-         +(
-           (+_1_01 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "02"
-     ) {
-       _1_02 =
-         +(
-           (+_1_02 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "03"
-     ) {
-       _1_03 =
-         +(
-           (+_1_03 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "04"
-     ) {
-       _1_04 =
-         +(
-           (+_1_04 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "05"
-     ) {
-       _1_05 =
-         +(
-           (+_1_05 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "06"
-     ) {
-       _1_06 =
-         +(
-           (+_1_06 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "07"
-     ) {
-       _1_07 =
-         +(
-           (+_1_07 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "08"
-     ) {
-       _1_08 =
-         +(
-           (+_1_08 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "09"
-     ) {
-       _1_09 =
-         +(
-           (+_1_09 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "10"
-     ) {
-       _1_10 =
-         +(
-           (+_1_10 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "11"
-     ) {
-       _1_11 =
-         +(
-           (+_1_11 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
-     if (
-       ff.createdAt.toString().substring(0, 4) === actuallyYear &&
-       ff.trainer === email &&
-       ff.createdAt.toString().substring(5, 7) === "12"
-     ) {
-       _1_12 =
-         +(
-           (+_1_12 +
-             +ff.q1 +
-             +ff.q2 +
-             +ff.q3 +
-             +ff.q4 +
-             +ff.q5 +
-             +ff.q6 +
-             +ff.q7 +
-             +ff.q8 +
-             +ff.q9 +
-             +ff.q10) /
-           10
-         ) + +ff.q11;
-     }
+                filteredVotes.push(ff);
+            }
+console.log(ff)
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "01"
+            ) {
+                _1_01 =
+                    +(
+                        (+_1_01 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "02"
+            ) {
+                _1_02 =
+                    +(
+                        (+_1_02 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "03"
+            ) {
+                _1_03 =
+                    +(
+                        (+_1_03 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "04"
+            ) {
+                _1_04 =
+                    +(
+                        (+_1_04 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "05"
+            ) {
+                _1_05 =
+                    +(
+                        (+_1_05 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "06"
+            ) {
+                _1_06 =
+                    +(
+                        (+_1_06 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "07"
+            ) {
+                _1_07 =
+                    +(
+                        (+_1_07 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "08"
+            ) {
+                _1_08 =
+                    +(
+                        (+_1_08 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "09"
+            ) {
+                _1_09 =
+                    +(
+                        (+_1_09 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "10"
+            ) {
+                _1_10 =
+                    +(
+                        (+_1_10 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "11"
+            ) {
+                _1_11 =
+                    +(
+                        (+_1_11 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
+            if (
+                ff.courseDate.toString().substring(0, 4) === actuallyYear &&
+                ff.trainer === email &&
+                ff.courseDate.toString().substring(5, 7) === "12"
+            ) {
+                _1_12 =
+                    +(
+                        (+_1_12 +
+                            +ff.q1 +
+                            +ff.q2 +
+                            +ff.q3 +
+                            +ff.q4 +
+                            +ff.q5 +
+                            +ff.q6 +
+                            +ff.q7 +
+                            +ff.q8 +
+                            +ff.q9 +
+                            +ff.q10) /
+                        10
+                    ) + +ff.q11;
+            }
 
-    });
+        })
+    }
     setQuestion1(q1)
     setQuestion2(q2)
     setQuestion3(q3)
@@ -391,8 +393,8 @@ useEffect(()=>{
       datasets: [
         {
           label: [
-            `(${filteredForms.length})  ${
-              filteredForms.length === 1 ? "Bewertung" : "Bewertungen"
+            `(${filteredVotes.length})  ${
+              filteredVotes.length === 1 ? "Bewertung" : "Bewertungen"
             } für Trainer  :  ${props.location.state.trainer}`,
           ],
           data: [
@@ -546,4 +548,5 @@ useEffect(()=>{
     
   );
 };
+
 export default Chart;
